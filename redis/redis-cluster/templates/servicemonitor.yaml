@@ -1,0 +1,21 @@
+{{- if .Values.exporter.serviceMonitor.selfMonitor }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: {{ template "name" . }}
+    redis-operator.k8s.io/cluster-name: {{ template "clustername" . }}
+  name: {{ template "name" . }}  
+  namespace: {{ $.Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "name" . }}
+      redis-operator.k8s.io/cluster-name: {{ template "clustername" . }}
+  namespaceSelector:
+    matchNames:
+      - {{ $.Release.Namespace | quote }}
+  endpoints:
+  - port: exporter    
+    path: "/metrics"
+{{- end }}

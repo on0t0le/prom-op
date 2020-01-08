@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: {{ template "name" . }}
+    redis-operator.k8s.io/cluster-name: {{ template "clustername" . }}
+  name: {{ template "name" . }}      
+spec:
+  groups:
+  - name: redis
+    rules:
+    - alert: Test_rule
+      annotations:
+        message: Test rule {{`{{ $labels.namespace }}`}}/{{`{{ $labels.pod }}`}}.
+      expr: vector(1)
+      for: 2m
+      labels:
+        severity: warning
