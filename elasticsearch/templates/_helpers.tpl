@@ -24,59 +24,21 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified client name.
+Create a default fully qualified node name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "elasticsearch.client.fullname" -}}
-{{ template "elasticsearch.fullname" . }}-{{ .Values.client.name }}
+{{- define "elasticsearch.esNode.fullname" -}}
+{{ template "elasticsearch.fullname" . }}
 {{- end -}}
 
 {{/*
-Create a default fully qualified data name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+Create the name of the service account to use for the ES node
 */}}
-{{- define "elasticsearch.data.fullname" -}}
-{{ template "elasticsearch.fullname" . }}-{{ .Values.data.name }}
-{{- end -}}
-
-{{/*
-Create a default fully qualified master name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "elasticsearch.master.fullname" -}}
-{{ template "elasticsearch.fullname" . }}-{{ .Values.master.name }}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the client component
-*/}}
-{{- define "elasticsearch.serviceAccountName.client" -}}
-{{- if .Values.serviceAccounts.client.create -}}
-    {{ default (include "elasticsearch.client.fullname" .) .Values.serviceAccounts.client.name }}
+{{- define "elasticsearch.serviceAccountName.esNode" -}}
+{{- if .Values.serviceAccounts.esNode.create -}}
+    {{ default (include "elasticsearch.esNode.fullname" .) .Values.serviceAccounts.esNode.name }}
 {{- else -}}
-    {{ default "default" .Values.serviceAccounts.client.name }}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the data component
-*/}}
-{{- define "elasticsearch.serviceAccountName.data" -}}
-{{- if .Values.serviceAccounts.data.create -}}
-    {{ default (include "elasticsearch.data.fullname" .) .Values.serviceAccounts.data.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccounts.data.name }}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the master component
-*/}}
-{{- define "elasticsearch.serviceAccountName.master" -}}
-{{- if .Values.serviceAccounts.master.create -}}
-    {{ default (include "elasticsearch.master.fullname" .) .Values.serviceAccounts.master.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccounts.master.name }}
+    {{ default "default" .Values.serviceAccounts.esNode.name }}
 {{- end -}}
 {{- end -}}
 

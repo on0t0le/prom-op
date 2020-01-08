@@ -7,19 +7,20 @@ metadata:
     app: {{ template "elasticsearch.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 roleRef:
   kind: Role
   name: {{ template "elasticsearch.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: {{ template "elasticsearch.serviceAccountName.esNode" . }}
+  name: {{ template "elasticsearch.serviceAccountName.client" . }}
   namespace: {{ .Release.Namespace }}
 - kind: ServiceAccount
-  name: {{ template "elasticsearch.serviceAccountName.esNode" . }}
+  name: {{ template "elasticsearch.serviceAccountName.data" . }}
   namespace: {{ .Release.Namespace }}
 - kind: ServiceAccount
-  name: {{ template "elasticsearch.serviceAccountName.esNode" . }}
+  name: {{ template "elasticsearch.serviceAccountName.master" . }}
   namespace: {{ .Release.Namespace }}
 {{- end }}
 

@@ -1,11 +1,12 @@
 {{- if .Values.podSecurityPolicy.enabled }}
-apiVersion: extensions/v1beta1
+apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ template "elasticsearch.fullname" . }}
   labels:
     app: {{ template "elasticsearch.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   annotations:
 {{- if .Values.podSecurityPolicy.annotations }}
