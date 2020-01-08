@@ -52,3 +52,6 @@ exporter:
 
   # Additional args for redis exporter
   extraArgs: {}
+
+  serviceMonitor:
+    selfMonitor: true
