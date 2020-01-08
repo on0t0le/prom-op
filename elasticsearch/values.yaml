@@ -134,8 +134,8 @@ client:
     #   memory: "128Mi"
   resources:
     limits:
-      cpu: "1"
-      # memory: "1024Mi"
+      cpu: "25m"
+      memory: "1024Mi"
     requests:
       cpu: "25m"
       memory: "512Mi"
@@ -199,8 +199,8 @@ master:
     #   memory: "128Mi"
   resources:
     limits:
-      cpu: "1"
-      # memory: "1024Mi"
+      cpu: "25m"
+      memory: "1024Mi"
     requests:
       cpu: "25m"
       memory: "512Mi"
@@ -253,8 +253,8 @@ data:
     #   memory: "128Mi"
   resources:
     limits:
-      cpu: "1"
-      # memory: "2048Mi"
+      cpu: "25m"
+      memory: "1024Mi"
     requests:
       cpu: "25m"
       memory: "512Mi"
