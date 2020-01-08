@@ -57,7 +57,8 @@ cluster:
     # node knows the minimum number of master-eligible nodes that must be visible in order to form a cluster.
     MINIMUM_MASTER_NODES: "1"
   # List of plugins to install via dedicated init container
-  plugins: []
+  plugins:
+    - https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/6.6.2.0/prometheus-exporter-6.6.2.0.zip
     # - ingest-attachment
     # - mapper-size
 
@@ -71,8 +72,10 @@ esNode:
 #    example: client-svc-foo
   heapSize: "1g"
   # additionalJavaOpts: "-XX:MaxRAM=512m"
+  serviceMonitor:
+    selfMonitor: true
   persistence:
-    enabled: true
+    enabled: false
     #accessModes:
     #  - ReadWriteOnce
     name: data

@@ -1,0 +1,23 @@
+{{- if .Values.esNode.serviceMonitor.selfMonitor }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: {{ template "elasticsearch.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.esNode.name }}"
+    release: {{ .Release.Name }}
+  name: {{ template "elasticsearch.esNode.fullname" . }}  
+  namespace: {{ $.Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: elasticsearch
+      release: {{ $.Release.Name | quote }}
+  namespaceSelector:
+    matchNames:
+      - {{ $.Release.Namespace | quote }}
+  endpoints:
+  - port: http    
+    path: "/_prometheus/metrics"
+{{- end }}
